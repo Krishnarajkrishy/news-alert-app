@@ -3,10 +3,10 @@ import SignUp from "./Components/SignUp";
 import Loginpage from "./Components/Loginpage";
 import NavigationBar from "./Components/NavigationBar";
 import NewsList from "./Components/NewsList";
-import Subscriptionpage from "./Components/Subscriptionpage";
 import FavoritesPage from "./Components/FavoritesPage";
 import Home from "./Components/Home";
 import SigninHome from "./Components/SigninHome";
+import Subscriptionpage from "./Components/SubscriptionPage"
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -46,7 +46,7 @@ const App = () => {
           path="/subscription"
           element={
             <ProtectedRoute>
-              <Subscriptionpage />
+              <Subscriptionpage/>
             </ProtectedRoute>
           }
         />
