@@ -1,8 +1,15 @@
-# React + Vite
+# News & Alert System Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+A **React-based frontend** for the News & Alert System, enabling **user authentication**, **news retrieval**, **subscriptions**, **favorite news management**, and **protected routes**.
 
-Currently, two official plugins are available:
+## Features
+- **User Authentication** (`/register` & `/login`)
+- **News List Display** (`/news-list`)
+- **Favorite News Management** (`/favorites` - add/remove favorite articles)
+- **Subscription System** (`/subscription` - select categories, frequency, and notification method)
+- **Navigation Bar** (dynamic menu, mobile-friendly dropdown)
+- **Protected Routes** (localStorage token authentication)
+- **Pagination Support** (dynamic page navigation)
+- **User Notifications** (`react-toastify` for success/error alerts)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
