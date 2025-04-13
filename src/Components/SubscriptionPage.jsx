@@ -10,7 +10,7 @@ const options = [
   { value: "business", label: "Business" },
 ];
 
-const Subscriptionpage = () => {
+const SubscriptionPage = () => {
   const [email, setEmail] = useState("");
   const [categories, setCategories] = useState([]);
   const [frequency, setFrequency] = useState("hourly");
@@ -114,4 +114,4 @@ const Subscriptionpage = () => {
   );
 };
 
-export default Subscriptionpage;
+export default SubscriptionPage;

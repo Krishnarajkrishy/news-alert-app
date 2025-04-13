@@ -6,7 +6,7 @@ import NewsList from "./Components/NewsList";
 import FavoritesPage from "./Components/FavoritesPage";
 import Home from "./Components/Home";
 import SigninHome from "./Components/SigninHome";
-import Subscriptionpage from "./Components/SubscriptionPage"
+import SubscriptionPage from "./Components/SubscriptionPage"
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -46,7 +46,7 @@ const App = () => {
           path="/subscription"
           element={
             <ProtectedRoute>
-              <Subscriptionpage/>
+              <SubscriptionPage/>
             </ProtectedRoute>
           }
         />
