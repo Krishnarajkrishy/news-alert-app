@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import LoadingPage from "./LoadingPage";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     const fetchFavorites = async () => {
       try {
         const userId = localStorage.getItem("userId"); 
@@ -15,6 +18,8 @@ const FavoritesPage = () => {
         setFavorites(res.data);
       } catch (err) {
         console.error("Failed to fetch favorites:", err);
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -22,14 +27,17 @@ const FavoritesPage = () => {
   }, []);
 
   const removeFavorite = async (id) => {
+    setLoading(true)
     try {
       await axios.delete(`https://news-server-1-vz31.onrender.com/api/favorites/${id}`);
       setFavorites((prev) => prev.filter((fav) => fav._id !== id));
     } catch (err) {
       console.error("Failed to remove favorite:", err);
+    } finally {
+      setLoading(false)
     }
   };
-
+   if(loading) return<LoadingPage/>
   return (
     <div className="min-h-screen py-8 bg-gray-100">
       <h2 className="text-center text-4xl font-bold font-serif mb-6">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import LoadingPage from "./LoadingPage";
 
 const categories = [
   "business",
@@ -21,10 +22,12 @@ const NewsList = () => {
   const [totalPage, setTotalPage] = useState(1);
 
   const userId = localStorage.getItem("userId");
+  const[loading,setLoading]= useState(false)
 
   // Fetch News Articles
   useEffect(() => {
     const fetchNews = async () => {
+      setLoading(true)
       try {
         const response = await axios.get(
           `https://news-server-1-vz31.onrender.com/api/news?category=${category}&page=${page}&pageSize=${pageSize}`
@@ -33,6 +36,8 @@ const NewsList = () => {
         setTotalPage(response.data.totalPages || 1);
       } catch (e) {
         console.error("Error fetching news:", e);
+      } finally {
+        setLoading(false)
       }
     };
     fetchNews();
@@ -40,6 +45,7 @@ const NewsList = () => {
 
   // Fetch User Favorites
   const fetchFavorites = async () => {
+    setLoading(true)
     if (!userId) return;
     try {
       const res = await axios.get(
@@ -48,12 +54,22 @@ const NewsList = () => {
       setFavorites(res.data);
     } catch (err) {
       console.error("Failed to fetch favorites:", err);
+    } finally {
+      setLoading(false)
     }
   };
 
-  useEffect(() => {
-    fetchFavorites();
-  }, [userId]);
+ useEffect(() => {
+   const loadFavorites = async () => {
+     setLoading(true);
+     await fetchFavorites(); 
+     setLoading(false);
+   };
+
+   if (userId) {
+     loadFavorites();
+   }
+ }, [userId]);
 
   const toggleFavorite = async (news) => {
     if (!userId) {
@@ -96,7 +112,7 @@ const NewsList = () => {
   const handleNextPage = () => {
     if (page < totalPage) setPage((prev) => prev + 1);
   };
-
+  if(loading) return <LoadingPage/>
   return (
     <div className="min-h-screen py-8 bg-gray-100">
       <h2 className="text-center text-4xl font-extrabold font-serif mt-8">

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
+import LoadingPage from "./LoadingPage";
 
 const options = [
   { value: "sports", label: "Sports" },
@@ -15,6 +16,7 @@ const SubscriptionPage = () => {
   const [categories, setCategories] = useState([]);
   const [frequency, setFrequency] = useState("hourly");
   const [notifications, setNotifications] = useState(["email"]);
+  const [loading,setLoading] = useState(false)
 
   const handleChange = (selectedCategories) => {
     setCategories(selectedCategories);
@@ -22,6 +24,7 @@ const SubscriptionPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const preferences = {
       categories: categories.map((cat) => cat.value),
       frequency,
@@ -40,9 +43,11 @@ const SubscriptionPage = () => {
       setNotifications(["email"]);
     } catch (error) {
       toast.error("Error subscribing. Please try again!");
+    } finally {
+      setLoading(false)
     }
   };
-
+  if(loading) return <LoadingPage/>
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 sm:p-8">
       <ToastContainer position="top-center" autoClose={3000} />

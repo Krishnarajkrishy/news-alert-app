@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingPage from "./LoadingPage";
 
 const Loginpage = () => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate();
 
@@ -18,6 +20,7 @@ const Loginpage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const response = await axios.post(
         "https://news-server-1-vz31.onrender.com/api/auth/login",
@@ -41,9 +44,12 @@ const Loginpage = () => {
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Error:", error);
+    } finally {
+      setLoading(false)
     }
+    
   };
-
+   if(loading) return <LoadingPage/>
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <ToastContainer position="top-center" autoClose={3000} />

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingPage from "./LoadingPage";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ const SignUp = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false)
+  
   const navigate = useNavigate();
 
   const handleChange = (e) =>
@@ -18,6 +21,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const response = await axios.post(
         "https://news-server-1-vz31.onrender.com/api/auth/signup",
@@ -35,9 +39,12 @@ const SignUp = () => {
           ? error.response.data.message
           : "Signup failed! Please try again.";
       toast.error(errorMsg);
+    } finally {
+      setLoading(false)
     }
   };
 
+  if(loading) return <LoadingPage/>
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <ToastContainer position="top-center" autoClose={3000} />
